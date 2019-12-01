@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using WS_BILER.Models;
+using WS_BILER.Interface;
+using WS_BILER.Service;
 
 namespace WS_BILER
 {
@@ -33,6 +37,11 @@ namespace WS_BILER
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<ICar,ServiceCar>();
+
+            services.AddDbContext<BilerContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("BilerContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
